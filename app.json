@@ -1,7 +1,7 @@
 {
   "name": "happenings-server",
   "description": "Happenings Server (Ruby on Rails, JavaScript, Postgres, Redis, ElasticSearch)",
-  "website": "https://happenings-server.herokuapp.com",
+  "website": "https://happenings-server-production.herokuapp.com",
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   },
@@ -99,14 +99,14 @@
   "addons": [
     "autobus",
     "deadmanssnitch",
-    "mailtrap",
-    "papertrail",
     "heroku-postgresql",
     "heroku-redis",
+    "mailtrap",
+    "papertrail",
     "rollbar",
     "scheduler",
+    "scout",
     "searchbox",
-    "scout"
   ],
   "buildpacks": [
     {
