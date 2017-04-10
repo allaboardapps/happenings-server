@@ -106,7 +106,7 @@
     "rollbar",
     "scheduler",
     "scout",
-    "searchbox",
+    "searchbox"
   ],
   "buildpacks": [
     {
