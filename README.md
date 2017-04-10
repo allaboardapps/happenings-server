@@ -15,3 +15,7 @@ ruby 2.4.1
 rails 5.0.2
 postgres 9.6.2
 elasticsearch 5.1.2
+
+## Installation
+
+`rails new happenings-server --database=postgresql --skip-spring --skip-turbolinks --skip-test --skip-action-cable`

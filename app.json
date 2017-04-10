@@ -1,0 +1,119 @@
+{
+  "name": "happenings-server",
+  "description": "Happenings Server (Ruby on Rails, JavaScript, Postgres, Redis, ElasticSearch)",
+  "website": "https://happenings-server.herokuapp.com",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "env": {
+    "DB_POOL": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "MAILTRAP_PASSWORD": {
+      "required": true
+    },
+    "MAILTRAP_USERNAME": {
+      "required": true
+    },
+    "MAX_THREADS": {
+      "required": true
+    },
+    "MIN_THREADS": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "ROLLBAR_CLIENT_TOKEN": {
+      "required": true
+    },
+    "ROLLBAR_ENV": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "WEB_CONNCURRENCY": {
+      "required": true
+    },
+    "CDN_HOSTNAME": {
+      "required": true
+    },
+    "SEARCHBOX_SSL_URL": {
+      "required": true
+    },
+    "SEARCHBOX_URL": {
+      "required": true
+    },
+    "ELASTICSEARCH_URL": {
+      "required": true
+    },
+    "REVIEW_APPLICATION": {
+      "description": "Indicate that this installation is a Heroku Review App",
+      "value": "true"
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "value": "false"
+    },
+    "AWS_REGION": {
+      "value": "us-east-1"
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "value": "us-east-1"
+    },
+    "AWS_PHOTO_BUCKET": {
+      "value": "us-east-1"
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "value": "us-east-1"
+    },
+    "CDN": {
+      "value": "us-east-1"
+    },
+    "CDN_HOSTNAME": {
+      "value": "us-east-1"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "hobby"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "hobby"
+    }
+  },
+  "addons": [
+    "autobus",
+    "deadmanssnitch",
+    "mailtrap",
+    "papertrail",
+    "heroku-postgresql",
+    "heroku-redis",
+    "rollbar",
+    "scheduler",
+    "searchbox",
+    "scout"
+  ],
+  "buildpacks": [
+    {
+        "url": "heroku/nodejs"
+    },
+    {
+        "url": "heroku/ruby"
+    }
+  ]
+}
