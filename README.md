@@ -19,3 +19,10 @@ elasticsearch 5.1.2
 ## Installation
 
 `rails new happenings-server --database=postgresql --skip-spring --skip-turbolinks --skip-test --skip-action-cable`
+
+## Heroku Setup
+
+* Deploys from Github master branch
+* Utilizes Heroku CI (beta)
+* `git remote add staging https://git.heroku.com/happenings-server-staging.git`
+* `git remote add production https://git.heroku.com/happenings-server-production.git`
