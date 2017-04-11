@@ -67,21 +67,6 @@
       "description": "Indicate that this installation is a Heroku Review App",
       "value": "true"
     },
-    "NPM_CONFIG_PRODUCTION": {
-      "value": "false"
-    },
-    "AWS_REGION": {
-      "value": "us-east-1"
-    },
-    "AWS_ACCESS_KEY_ID": {
-      "value": "us-east-1"
-    },
-    "AWS_PHOTO_BUCKET": {
-      "value": "us-east-1"
-    },
-    "AWS_SECRET_ACCESS_KEY": {
-      "value": "us-east-1"
-    },
     "CDN": {
       "value": "us-east-1"
     },
