@@ -1,0 +1,120 @@
+require: rubocop-rspec
+
+Rails:
+  Enabled: true
+
+AllCops:
+  TargetRubyVersion: 2.4
+  DisplayCopNames: true
+  Include:
+    - "**/*.gemspec"
+    - "**/Rakefile"
+  Exclude:
+    - "bin/**/*"
+    - "config/**/*"
+    - "db/**/*"
+    - "log/**/*"
+    - "script/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "app/admin/**/*"
+    - "Gemfile"
+
+StringLiterals:
+  EnforcedStyle: double_quotes
+
+PerlBackrefs:
+  Enabled: false
+
+SymbolProc:
+  Exclude:
+    - "app/admin/**/*"
+
+LineLength:
+  Max: 300
+
+ModuleLength:
+  Max: 500
+
+Documentation:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/VariableNumber:
+  EnforcedStyle: "snake_case"
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/EmptyLineAfterSubject:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: trueSsaadd11
+
+  Exclude:
+    - "spec/spec_helper.rb"
+
+Style/StructInheritance:
+  Enabled: true
+  Exclude:
+    - "app/policies/**/*"
+
+Style/AlignHash:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/NestedParenthesizedCalls:
+  Enabled: false
+
+AssignmentInCondition:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+NumericLiterals:
+  Enabled: false
+
+RSpec/RepeatedExample:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
