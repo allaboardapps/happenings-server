@@ -99,3 +99,59 @@ staging https://git.heroku.com/happenings-server-staging.git (push)
 * Ref: https://github.com/laserlemon/figaro
 * Note: We use the figaro gem to store and access env variables out of the reach of source control
 * Note: You will need to retrieve the valid variables from a team member and place the contents in the `/config/application.yml` file.
+
+### Setup Foreman
+
+* Ref: https://github.com/ddollar/foreman
+* Install: `gem install foreman`
+* Note: This will run the `Procfile` and `Procfile.development` instructions
+* Note: You can run your processes with `foreman start -f Procfile.development`
+* Note: Heroku will utilize the `Procfile` instructions
+
+### Run Servers
+
+* to run the local server type `rails server` or `rails s`
+* visit `localhost:3000`
+
+### Understanding Pundit for Authorization
+
+* We use the `pundit` gem for authorization in controllers
+* Ref: https://github.com/elabs/pundit
+* Ref: https://github.com/chrisalley/pundit-matchers
+* Policies are located in `app/policies`
+* Specs for policies are located in `spec/policies`
+
+### robots.txt
+
+* Ref: http://www.jakobbeyer.de/creating-a-dynamic-robots-txt-for-ruby-on-rails
+* Note: Changes to the `robots.txt` file can be adjusted in the `/app/views/static/robots.text.erb` file
+
+### Deployment
+
+1. Push your branch to GitHub with `git push origin [branch-name]`
+1. HerokuCI will build the app, run `rspec`, and scan style with `rubocop`.
+1. When the `master` branch passes on the HerokuCI build, the app will be deployed to the staging server on Heroku
+1. The application is hosted on a Heroku Pipeline named [happenings-server](https://dashboard.heroku.com/pipelines/2f569902-f8e9-4f7c-8828-b06c488c2b66)
+1. You can promote the staging app to production (`happenings-server-staging` to `happenings-server-production`) via `heroku pipelines:promote -r staging`
+1. Post-deploy tasks are referenced in the `Procfile` after the `release:` instruction
+1. The deploy tasks are located in the `/lib/tasks/app.rake` file
+1. To create a new version tag the last commit with `git tag -d v[semver]` and `git push --tags origin`
+
+## Quality Control
+
+* run Rails tests: `bundle exec rspec spec`
+* run Rubocop linting: `rubocop`
+
+### Email Systems
+
+#### Development
+
+We are using [Letter Opener Web](https://github.com/fgrehm/letter_opener_web) which will ease the development of emails. Instead of actually sending the emails, they will be caught and stored at `/tmp/letter_opener`. This way they can be viewed and evaluated. You can view and delete the emails at `http://localhost:3000/letter_opener/`
+
+#### Staging
+
+Using Mailtrap
+
+#### Production
+
+Using Postmark
