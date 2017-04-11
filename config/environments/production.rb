@@ -36,7 +36,7 @@ Rails.application.configure do
 
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -79,4 +79,22 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.time_zone = "UTC"
+
+  if ENV["MAIL_SYSTEM"] == "mailtrap"
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      user_name: ENV["MAILTRAP_USERNAME"],
+      password: ENV["MAILTRAP_PASSWORD"],
+      address: "mailtrap.io",
+      domain: "mailtrap.io",
+      port: "2525",
+      authentication: :cram_md5
+    }
+  elsif ENV["MAIL_SYSTEM"] == "postmark"
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { api_key: ENV["POSTMARK_API_KEY"] }
+    config.action_mailer.default_url_options = { host: "happenings-server-production.herokuapp.com" }
+  end
 end
