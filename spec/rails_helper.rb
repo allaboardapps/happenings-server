@@ -24,8 +24,8 @@ Capybara.raise_server_errors = true
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Rails.application.routes.url_helpers
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Warden::Test::Helpers
+  # config.include Devise::Test::ControllerHelpers, type: :controller
+  # config.include Warden::Test::Helpers
   config.include ActiveJob::TestHelper
   config.include StateMachinesRspec::Matchers, type: :model
 
@@ -43,11 +43,11 @@ RSpec.configure do |config|
   end
 
   config.before(:all, elasticsearch: true) do
-    Item.searchkick_index.delete if Item.searchkick_index.exists?
+    # Item.searchkick_index.delete if Item.searchkick_index.exists?
   end
 
   config.before(:each, elasticsearch: true) do
-    Item.reindex
+    # Item.reindex
   end
 
   config.before(:each) do
