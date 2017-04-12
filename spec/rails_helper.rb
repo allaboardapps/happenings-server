@@ -63,7 +63,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    Warden.test_reset!
+    # Warden.test_reset!
     clear_enqueued_jobs
     clear_performed_jobs
   end
