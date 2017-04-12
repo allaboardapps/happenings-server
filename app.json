@@ -2,9 +2,11 @@
   "name": "happenings-server",
   "description": "Happenings Server (Ruby on Rails, JavaScript, Postgres, Redis, ElasticSearch)",
   "website": "https://happenings-server-production.herokuapp.com",
+  "repository": "https://github.com/allaboardapps/happenings-server",
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   },
+  "stack": "cedar-14",
   "env": {
     "DB_POOL": {
       "required": true
@@ -46,7 +48,8 @@
       "required": true
     },
     "SECRET_KEY_BASE": {
-      "required": true
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
     },
     "WEB_CONNCURRENCY": {
       "required": true
@@ -74,6 +77,17 @@
       "value": "us-east-1"
     }
   },
+  "environments": {
+    "test": {
+      "env": {
+        "SECRET_TOKEN": "test-secret"
+      },
+      "scripts": {
+        "test": "bundle exec rspec",
+        "test": "rubocop ."
+      }
+    }
+  },
   "formation": {
     "web": {
       "quantity": 1,
@@ -97,9 +111,6 @@
     "searchbox"
   ],
   "buildpacks": [
-    {
-        "url": "heroku/nodejs"
-    },
     {
         "url": "heroku/ruby"
     }
