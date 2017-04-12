@@ -83,8 +83,7 @@
         "SECRET_TOKEN": "test-secret"
       },
       "scripts": {
-        "test": "bundle exec rspec",
-        "test": "rubocop ."
+        "test": "bundle exec rspec && rubocop ."
       }
     }
   },
