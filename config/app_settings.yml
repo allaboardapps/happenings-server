@@ -1,0 +1,37 @@
+defaults: &defaults
+  app_name: "Happenings Server"
+  app_repo_name: "happenings-server"
+  app_server: "Development"
+  brand_name: "Happs"
+  default_page_description: "This page needs a description"
+  default_page_keywords: "This page needs keywords"
+  default_url: "http://localhost:3000"
+  alerts_email: "alerts@happs.com"
+  feedback_email: "support@happs.com"
+  google_analytics_tracking_id: "UA-xxxxxx-x"
+  no_reply_email: "no-reply@happs.com"
+  support_email: "support@happs.com"
+  twitter_handle: "@happs"
+
+test:
+  <<: *defaults
+  app_server: "Test"
+  google_analytics_tracking_id: "UA-xxxxxx-x"
+  redis_url: "redis://localhost:6379"
+
+development:
+  <<: *defaults
+  app_server: "Development"
+  google_analytics_tracking_id: "UA-xxxxxx-x"
+
+staging:
+  <<: *defaults
+  app_server: "Staging"
+  default_url: "https://happening-staging.herokuapp.com"
+  google_analytics_tracking_id: "UA-xxxxxx-x"
+
+production:
+  <<: *defaults
+  app_server: "Production"
+  default_url: "https://www.happs.com"
+  google_analytics_tracking_id: "UA-xxxxxx-x"

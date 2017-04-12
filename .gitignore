@@ -14,6 +14,7 @@
 .rvmrc
 .sass-cache
 /.bundle
+/app/assets/javascripts/webpack_*
 /config/application.yml
 /coverage/
 /db/*.sqlite3
@@ -24,26 +25,25 @@
 /public/assets/source_maps/*
 /public/system
 /public/system/*
+/spec/examples.txt
 /spec/support/captured_images/
 /spec/tmp
 /spec/tmp/*
-/spec/examples.txt
 /tmp
 /tmp/*
 /vendor/assets/bower_components
 /vendor/bundle
+app/assets/javascripts/webpack_bundle.js
 bower.json
 capybara-*.html
 config/initializers/secret_token.rb
 dump.rdb
 erd.pdf
+eslint --ignore-path /tmp/**/*
 FALSE
 latest.dump
 manifest.json
+node_modules
+npm-debug.log
 pickle-email-*.html
 rerun.txt
-app/assets/javascripts/webpack_bundle.js
-node_modules
-/app/assets/javascripts/webpack_*
-eslint --ignore-path /tmp/**/*
-npm-debug.log
