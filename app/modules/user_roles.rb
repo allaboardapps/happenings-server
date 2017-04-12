@@ -3,7 +3,7 @@ module UserRoles
   STAFF = "staff".freeze
   CUSTOMER = "customer".freeze
 
-  def self.company_roles
+  def self.system_roles
     [self::ADMIN, self::STAFF]
   end
 
@@ -11,11 +11,11 @@ module UserRoles
     [self::CUSTOMER]
   end
 
+  def self.active_admin_roles
+    [self::ADMIN]
+  end
+
   def self.all
-    [
-      self::ADMIN,
-      self::STAFF,
-      self::CUSTOMER
-    ]
+    [self::ADMIN, self::STAFF, self::CUSTOMER]
   end
 end

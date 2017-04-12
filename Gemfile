@@ -9,6 +9,7 @@ gem "rails", "~> 5.0.2"
 
 gem "active_model_serializers", "0.10.5"
 gem "activeadmin", "1.0.0.pre5"
+gem "devise", "4.2.1"
 gem "faker", "1.7.3"
 gem "figaro", "1.1.1"
 gem "hirefire-resource", "0.4.0"

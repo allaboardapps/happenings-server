@@ -6,8 +6,8 @@ describe UserRoles, type: :module do
     expect(described_class::CUSTOMER).to eq "customer"
   end
 
-  it "returns a list of company roles" do
-    expect(described_class.company_roles).to include("staff", "admin")
+  it "returns a list of system roles" do
+    expect(described_class.system_roles).to include("staff", "admin")
   end
 
   context ".all" do
