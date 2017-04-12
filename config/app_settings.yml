@@ -24,12 +24,6 @@ development:
   app_server: "Development"
   google_analytics_tracking_id: "UA-xxxxxx-x"
 
-staging:
-  <<: *defaults
-  app_server: "Staging"
-  default_url: "https://happening-staging.herokuapp.com"
-  google_analytics_tracking_id: "UA-xxxxxx-x"
-
 production:
   <<: *defaults
   app_server: "Production"
