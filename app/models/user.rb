@@ -11,11 +11,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :registerable,
          :trackable, :validatable, :confirmable, :lockable, :timeoutable
 
-  scope :autocomplete, -> (user_query) { active.where("first_name ilike ? or last_name ilike ?", "#{user_query}%", "#{user_query}%").order(last_name: :asc, first_name: :asc) }
-  scope :admins, -> { where("'#{UserRoles::ADMIN}' = ANY (roles)") }
-  scope :staffers, -> { where("'#{UserRoles::STAFF}' = ANY (roles)") }
-  scope :customers, -> { where("'#{UserRoles::CUSTOMER}' = ANY (roles)") }
-  scope :with_one_of_roles, ->(*roles) { where.overlap(roles: roles) }
+  scope :autocomplete, (->(user_query) { active.where("first_name ilike ? or last_name ilike ?", "#{user_query}%", "#{user_query}%").order(last_name: :asc, first_name: :asc) })
+  scope :admins, (-> { where("'#{UserRoles::ADMIN}' = ANY (roles)") })
+  scope :staffers, (-> { where("'#{UserRoles::STAFF}' = ANY (roles)") })
+  scope :customers, (-> { where("'#{UserRoles::CUSTOMER}' = ANY (roles)") })
+  scope :with_one_of_roles, (->(*roles) { where.overlap(roles: roles) })
 
   # belongs_to :location
   # has_many :activities, as: :loggable
@@ -31,7 +31,6 @@ class User < ApplicationRecord
   # has_many :organization_users
   # has_many :organizations, through: :organization_users
   # has_one :region, through: :location
-
   after_create :set_default_role
 
   def generate_token!

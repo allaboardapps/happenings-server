@@ -36,7 +36,6 @@ FactoryGirl.define do
       statuses { [UserStatuses::PREMIUM] }
     end
 
-
     trait :archived do
       archived true
     end
