@@ -107,4 +107,32 @@ class User < ApplicationRecord
   def roles_presented
     roles.join(", ")
   end
+
+  def self.seed(roles: UserRoles::CUSTOMER, dummy: true)
+    fake_password = "A1{Faker::Internet.password(10, 120)}"
+    user_attrs = {
+      email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name,
+      password: fake_password, password_confirmation: fake_password, roles: [roles], time_zone: "UTC",
+      archived: false, test: false, dummy: dummy
+    }
+
+    user = new(user_attrs)
+    user.skip_confirmation!
+    user.save!
+    user
+  end
+
+  def self.seed_admin(user)
+    temp_password = "A1{Faker::Internet.password(10, 120)}"
+    admin = find_by(email: user[:email])
+
+    return if admin.present?
+    admin = create(
+      email: user[:email], first_name: user[:first_name], last_name: user[:last_name],
+      password: temp_password, password_confirmation: temp_password, roles: [UserRoles::ADMIN], time_zone: "UTC"
+    )
+    admin.skip_confirmation!
+    admin.save!
+    admin
+  end
 end

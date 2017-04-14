@@ -231,4 +231,63 @@ describe User, type: :model do
       expect(user.roles_presented).to eq "#{UserRoles::CUSTOMER}, #{UserRoles::ADMIN}"
     end
   end
+
+  describe ".seed" do
+    it "given no arguments, it creates a user with a role of customer and setting of dummy" do
+      10.times.each do
+        User.seed
+      end
+
+      expect(User.actives.count).to eq 0
+      expect(User.inactives.count).to eq 10
+      expect(User.customers.count).to eq 10
+      expect(User.dummies.count).to eq 10
+    end
+
+    it "given staff and non-dummy arguments, it creates a user with a role of staff and settings of active" do
+      6.times.each do
+        User.seed(roles: UserRoles::STAFF, dummy: false)
+      end
+
+      expect(User.actives.count).to eq 6
+      expect(User.customers.count).to eq 0
+      expect(User.staffers.count).to eq 6
+      expect(User.inactives.count).to eq 0
+      expect(User.dummies.count).to eq 0
+    end
+  end
+
+  describe ".seed_admin" do
+    it "creates a user with a role of `admin`" do
+      admins = [
+        { email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name },
+        { email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name }
+      ]
+      admins.each do |admin|
+        User.seed_admin(admin)
+      end
+
+      admin = User.first
+      expect(admin.roles).to eq [UserRoles::ADMIN]
+      expect(User.admins.count).to eq 2
+    end
+
+    it "does not duplicate an admin user based on email address" do
+      dupe_email = Faker::Internet.email
+
+      admins = [
+        { email: dupe_email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name },
+        { email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name },
+        { email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name },
+        { email: dupe_email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name }
+      ]
+      admins.each do |admin|
+        User.seed_admin(admin)
+      end
+
+      admin = User.last
+      expect(admin.roles).to eq [UserRoles::ADMIN]
+      expect(User.admins.count).to eq 3
+    end
+  end
 end
