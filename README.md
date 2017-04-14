@@ -33,7 +33,7 @@ elasticsearch 5.1.2
 ## Heroku Setup
 
 * Deploys from Github master branch
-* Utilizes Heroku CI (beta)
+* Utilizes CodeShip for CI
 * `git remote add staging https://git.heroku.com/happenings-server-staging.git`
 * `git remote add production https://git.heroku.com/happenings-server-production.git`
 
