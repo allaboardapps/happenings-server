@@ -1,4 +1,4 @@
- CREATE Admins
+# CREATE Admins
 puts "BEGIN: Create admins"
 admins = [
   { email: "wrburgess@gmail.com", username: "wrburgess", first_name: "Randy", last_name: "Burgess" },

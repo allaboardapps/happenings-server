@@ -17,43 +17,72 @@ class User < ApplicationRecord
   scope :customers, (-> { where("'#{UserRoles::CUSTOMER}' = ANY (roles)") })
   scope :with_one_of_roles, (->(*roles) { where.overlap(roles: roles) })
 
-  # belongs_to :location
-  # has_many :activities, as: :loggable
-  # has_many :authored_events, class_name: "Event", foreign_key: :author_id
-  # has_many :calendar_users
-  # has_many :calendars, through: :calendar_users
-  # has_many :event_users
-  # has_many :events, through: :event_users
-  # has_many :favorites
-  # has_many :favorited_events, through: :favorites, source: :event
-  # has_many :group_users
-  # has_many :groups, through: :group_users
-  # has_many :organization_users
-  # has_many :organizations, through: :organization_users
-  # has_one :region, through: :location
   after_create :set_default_role
 
+  # Generates a new token on a user instance `token` attribute
+  #
+  # @return [Boolean]
+  #
+  # @example Render a user's full name
+  #   user.token #=> nil
+  #   user.generate_token! #=> true
+  #   user.token #=> "7885e2132819484ab59e09464d9ac025"
   def generate_token!
     self.token = SecureRandom.hex
     save!
   end
 
+  # Concatenates, capitalizes, and removes whitespace from
+  #   the `first_name` and `last_name` of a user instance
+  #
+  # @return [String]
+  #
+  # @example Render a user's full name
+  #   user.first_name #=> "Randy"
+  #   user.last_name #=> "Burgess"
+  #   user.full_name #=> "Randy Burgess"
   def full_name
     "#{first_name} #{last_name}".gsub(/\b('?[a-z])/) { $1.capitalize }.strip
   end
 
+  # Returns an abbreviated `first_name` and length-specified `last_name` of a user instance
+  #
+  # @return [String]
+  #
+  # @example Render a user's first name abbreviated and last name 6 max characters
+  #   user.first_name #=> "Randy"
+  #   user.last_name #=> "Burgess"
+  #   user.first_name_abbreviated(6) #=> "R. Burges"
   def first_name_abbreviated(last_name_length = 7)
     first_name_abbrev = first_name.gsub(/\b('?[a-z])/) { $1.capitalize }.strip.slice(0, 1)
     last_name_abbrev = last_name.gsub(/\b('?[a-z])/) { $1.capitalize }.strip.slice(0, last_name_length)
     "#{first_name_abbrev}. #{last_name_abbrev}"
   end
 
+  # Returns a length-specified `first_name` and an abbreviated `last_name` of a user instance
+  #
+  # @return [String]
+  #
+  # @example Render a user's last name abbreviated and first name 4 max characters
+  #   user.first_name #=> "Randy"
+  #   user.last_name #=> "Burgess"
+  #   user.first_name_abbreviated(4) #=> "Rand B."
   def last_name_abbreviated(first_name_length = 7)
     first_name_abbrev = first_name.gsub(/\b('?[a-z])/) { $1.capitalize }.strip.slice(0, first_name_length)
     last_name_abbrev = last_name.gsub(/\b('?[a-z])/) { $1.capitalize }.strip.slice(0, 1)
     "#{first_name_abbrev} #{last_name_abbrev}."
   end
 
+  # Specifies whether a user instance is authorized for active admin access
+  #
+  # @return [Boolean]
+  #
+  # @example Is the user allowed active admin access?
+  #   user.roles #=> ['admin']
+  #   user.active_admin_access? #=> true
+  #
+  #   user.roles #=> ['customer']
+  #   user.active_admin_access? #=> false
   def active_admin_access?
     roles.any? { |role| UserRoles.active_admin_roles.include?(role) }
   end
@@ -76,38 +105,80 @@ class User < ApplicationRecord
     end
   end
 
-  def set_default_role
-    update_attribute :roles, [UserRoles::CUSTOMER] if roles.empty?
-  end
-
   def admin?
-    role? UserRoles::ADMIN
+    role?(UserRoles::ADMIN)
   end
 
   def customer?
-    role? UserRoles::CUSTOMER
+    role?(UserRoles::CUSTOMER)
   end
 
   def status?(status)
-    statuses.include? status
+    statuses.include?(status)
   end
 
+  # Specifies if user has status equal to or above `basic`
+  #
+  # @return [Boolean]
+  #
+  # @example Return true if user has status of `premium`
+  #   user.statuses #=> ["premium"]
+  #   user.basic? #=> true
   def basic?
     status?(UserStatuses::BASIC) || status?(UserStatuses::PRO) || status?(UserStatuses::PREMIUM)
   end
 
+  # Specifies if user has status equal to or above `pro`
+  #
+  # @return [Boolean]
+  #
+  # @example Return true if user has status of `premium`
+  #   user.statuses #=> ["premium"]
+  #   user.premium? #=> true
+  #
+  # @example Return false if user has status of `basic`
+  #   user.statuses #=> ["basic"]
+  #   user.pro? #=> false
   def pro?
     status?(UserStatuses::PRO) || status?(UserStatuses::PREMIUM)
   end
 
+  # Specifies if user has status equal to `premium`
+  #
+  # @return [Boolean]
+  #
+  # @example Return true if user has status of `premium`
+  #   user.statuses #=> ["premium"]
+  #   user.premium? #=> true
+  #
+  # @example Return false if user has status of `pro`
+  #   user.statuses #=> ["pro"]
+  #   user.premium? #=> false
   def premium?
     status?(UserStatuses::PREMIUM)
   end
 
+  # Renders a comma-separated list of user instance roles
+  #
+  # @return [String]
+  #
+  # @example Print the user roles separated by comma
+  #   user.roles #=> ['user', admin']
+  #   user.roles_presented #=> "user, admin"
   def roles_presented
     roles.join(", ")
   end
 
+  # Creates a user instance for test/dev needs and skips confirmation email
+  #
+  # @param roles [String] default is "customer"
+  # @param dummy [Boolean] default is `true`
+  # @return [Object] the newly created user with role of `customer` and dummy set to `true`
+  #
+  # @example Create a seed instance of a user with dummy trait, roles of customer
+  #   user.seed #=> user
+  #   user.dummy #=> true
+  #   user.roles #=> ["customer"]
   def self.seed(roles: UserRoles::CUSTOMER, dummy: true)
     fake_password = "A1{Faker::Internet.password(10, 120)}"
     user_attrs = {
@@ -122,6 +193,14 @@ class User < ApplicationRecord
     user
   end
 
+  # Creates an admin instance for test/dev needs and skips confirmation email
+  #
+  # @param user [Hash] user hash with properties of `email`, `first_name`, `Last_name`
+  # @return [Object] the newly created user with role of `admin`
+  #
+  # @example Create a seed instance of a user with dummy trait, roles of customer
+  #   user.seed_admin #=> user
+  #   user.roles #=> ["admin"]
   def self.seed_admin(user)
     temp_password = "A1{Faker::Internet.password(10, 120)}"
     admin = find_by(email: user[:email])
@@ -134,5 +213,17 @@ class User < ApplicationRecord
     admin.skip_confirmation!
     admin.save!
     admin
+  end
+
+  private
+
+  # Sets the user role to `customer` if no role exists
+  #
+  # @return [nil]
+  #
+  # @example Set the user default role to `customer` if none exists
+  #   user.set_default_role #=> nil
+  def set_default_role
+    update_attribute :roles, [UserRoles::CUSTOMER] if roles.empty?
   end
 end

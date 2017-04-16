@@ -56,6 +56,7 @@ group :development do
   gem "letter_opener_web", "1.3.1"
   gem "listen", "3.1.5"
   gem "web-console", "3.5.0"
+  gem "yard", "0.9.8"
 end
 
 group :test do

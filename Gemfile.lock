@@ -489,6 +489,7 @@ DEPENDENCIES
   timecop (= 0.8.1)
   uglifier (= 3.2.0)
   web-console (= 3.5.0)
+  yard (= 0.9.8)
 
 RUBY VERSION
    ruby 2.4.1p111
