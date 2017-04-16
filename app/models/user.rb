@@ -1,8 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
   include Activatable
 
   validates :email, presence: true
@@ -87,32 +83,97 @@ class User < ApplicationRecord
     roles.any? { |role| UserRoles.active_admin_roles.include?(role) }
   end
 
-  def active_for_authentication?
-    super && !archived?
-  end
-
+  # Specifies if user has a role
+  #
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has any role
+  #   user.roles #=> ["admin"]
+  #   user.user_role?(UserRoles::ADMIN) #=> true
+  #
+  # @example Return `false` if user does not have any role
+  #   user.roles #=> []
+  #   user.user_role?(UserRoles::CUSTOMER) #=> false
   def user_role?
     roles.any? { |role| Roles.user_roles.include?(role) }
   end
 
+  # Specifies if user has role submitted
+  #
+  # @param role [String] The role being tested
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has role of `admin`
+  #   user.roles #=> ["admin"]
+  #   user.role?(UserRoles::ADMIN) #=> true
+  #
+  # @example Return `false` if user does not have role of `customer`
+  #   user.roles #=> ["admin"]
+  #   user.role?(UserRoles::CUSTOMER) #=> false
   def role?(role)
     roles.include? role
   end
 
+  # Specifies if user has roles submitted
+  #
+  # @param allowed_roles [Array] Collection of roles for assertion
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has role of `admin`
+  #   user.roles #=> ["admin", "customer"]
+  #   user.roles_contain_one_of?(UserRoles::ADMIN) #=> true
+  #
+  # @example Return `false` if user does not have role of `customer`
+  #   user.roles #=> ["admin", "staff"]
+  #   user.roles_contain_one_of?(UserRoles::CUSTOMER) #=> false
   def roles_contain_one_of?(allowed_roles)
     roles.any? do |role|
       allowed_roles.include? role
     end
   end
 
+  # Specifies if user has role of `admin`
+  #
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has roles of `admin`
+  #   user.roles #=> ["admin"]
+  #   user.admin? #=> true
+  #
+  # @example Return `false` if user does not have role of `customer`
+  #   user.roles #=> ["customer"]
+  #   user.admin? #=> false
   def admin?
     role?(UserRoles::ADMIN)
   end
 
+  # Specifies if user has role of `customer`
+  #
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has role of `customer`
+  #   user.roles #=> ["customer"]
+  #   user.customer? #=> true
+  #
+  # @example Return `false` if user does not have role of `customer`
+  #   user.roles #=> ["admin"]
+  #   user.customer? #=> false
   def customer?
     role?(UserRoles::CUSTOMER)
   end
 
+  # Specifies if user has the submitted status
+  #
+  # @param status [String] The status being tested
+  # @return [Boolean]
+  #
+  # @example Return `true` if user has status of `premium`
+  #   user.statuses #=> ["premium"]
+  #   user.status?(UserStatuses::PREMIUM) #=> true
+  #
+  # @example Return `false` if user does not have status of `premium`
+  #   user.statuses #=> ["basic"]
+  #   user.status?(UserStatuses::PREMIUM) #=> false
   def status?(status)
     statuses.include?(status)
   end
@@ -121,9 +182,13 @@ class User < ApplicationRecord
   #
   # @return [Boolean]
   #
-  # @example Return true if user has status of `premium`
+  # @example Return `true` if user has status of `premium`
   #   user.statuses #=> ["premium"]
   #   user.basic? #=> true
+  #
+  # @example Return `false` if user has other status
+  #   user.statuses #=> ["other"]
+  #   user.basic? #=> false
   def basic?
     status?(UserStatuses::BASIC) || status?(UserStatuses::PRO) || status?(UserStatuses::PREMIUM)
   end
@@ -132,11 +197,11 @@ class User < ApplicationRecord
   #
   # @return [Boolean]
   #
-  # @example Return true if user has status of `premium`
+  # @example Return `true` if user has status of `premium`
   #   user.statuses #=> ["premium"]
   #   user.premium? #=> true
   #
-  # @example Return false if user has status of `basic`
+  # @example Return `false` if user has status of `basic`
   #   user.statuses #=> ["basic"]
   #   user.pro? #=> false
   def pro?
@@ -147,11 +212,11 @@ class User < ApplicationRecord
   #
   # @return [Boolean]
   #
-  # @example Return true if user has status of `premium`
+  # @example Return `true` if user has status of `premium`
   #   user.statuses #=> ["premium"]
   #   user.premium? #=> true
   #
-  # @example Return false if user has status of `pro`
+  # @example Return `false` if user has status of `pro`
   #   user.statuses #=> ["pro"]
   #   user.premium? #=> false
   def premium?
@@ -163,10 +228,21 @@ class User < ApplicationRecord
   # @return [String]
   #
   # @example Print the user roles separated by comma
-  #   user.roles #=> ['user', admin']
+  #   user.roles #=> ["user", "admin"]
   #   user.roles_presented #=> "user, admin"
   def roles_presented
     roles.join(", ")
+  end
+
+  # Renders a comma-separated list of user instance statuses
+  #
+  # @return [String]
+  #
+  # @example Print the user roles separated by comma
+  #   user.statues #=> ["basic", "pro"]
+  #   user.roles_presented #=> "basic, pro"
+  def statuses_presented
+    statuses.join(", ")
   end
 
   # Creates a user instance for test/dev needs and skips confirmation email
@@ -183,7 +259,9 @@ class User < ApplicationRecord
     fake_password = "A1{Faker::Internet.password(10, 120)}"
     user_attrs = {
       email: Faker::Internet.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name,
-      password: fake_password, password_confirmation: fake_password, roles: [roles], time_zone: "UTC",
+      password: fake_password, password_confirmation: fake_password,
+      roles: [roles], statuses: [UserStatuses::BASIC],
+      time_zone: "UTC", zip_code: Faker::Address.zip_code,
       archived: false, test: false, dummy: dummy
     }
 
@@ -208,7 +286,9 @@ class User < ApplicationRecord
     return if admin.present?
     admin = create(
       email: user[:email], first_name: user[:first_name], last_name: user[:last_name],
-      password: temp_password, password_confirmation: temp_password, roles: [UserRoles::ADMIN], time_zone: "UTC"
+      password: temp_password, password_confirmation: temp_password,
+      roles: [UserRoles::ADMIN], statuses: [UserStatuses::PREMIUM],
+      time_zone: "UTC", zip_code: "60640"
     )
     admin.skip_confirmation!
     admin.save!

@@ -4,19 +4,6 @@ require "concerns/activatable_shared"
 describe User, type: :model do
   it_behaves_like "activatable"
 
-  # it { is_expected.to belong_to :location }
-  # it { is_expected.to have_many :activities }
-  # it { is_expected.to have_many :authored_events }
-  # it { is_expected.to have_many :calendar_users }
-  # it { is_expected.to have_many :calendars }
-  # it { is_expected.to have_many :event_users }
-  # it { is_expected.to have_many :events }
-  # it { is_expected.to have_many :favorited_events }
-  # it { is_expected.to have_many :favorites }
-  # it { is_expected.to have_many :organization_users }
-  # it { is_expected.to have_many :organizations }
-  # it { is_expected.to have_one :region }
-
   describe "validations" do
     it "has a valid factory" do
       expect(FactoryGirl.create(:user)).to be_valid
@@ -28,10 +15,6 @@ describe User, type: :model do
 
     it "is invalid without a password" do
       expect(FactoryGirl.build(:user, password: nil)).not_to be_valid
-    end
-
-    xit "is invalid without a sufficient password" do
-      expect(FactoryGirl.build(:user, password: "1234567")).not_to be_valid
     end
 
     it "is invalid without a time zone" do

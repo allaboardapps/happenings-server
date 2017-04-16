@@ -20,6 +20,7 @@ gem "pg", "0.20.0"
 gem "postmark-rails", "0.15.0"
 gem "puma", "3.8.2"
 gem "pundit", "1.1.0"
+gem "rollbar", "2.14.1"
 gem "sass-rails", "5.0.6"
 gem "searchkick", "2.2.0"
 gem "settingslogic", "2.0.9"
@@ -34,7 +35,6 @@ gem "uglifier", "3.2.0"
 gem "jquery-rails"
 
 group :production do
-  gem "rollbar", "2.14.1"
   gem "scout_apm", "2.1.23"
 end
 
