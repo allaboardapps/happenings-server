@@ -1,5 +1,11 @@
 # Happenings Server
 
+## Documentation
+
+* We use [YARD](http://yardoc.org) for documentation
+* To update docs, run `yard doc`
+* To view docs locally, run `yard server` and visit http://localhost:8808
+
 ## Annotations in the codebase
 
 * Ref: http://guides.rubyonrails.org/command_line.html#notes
@@ -14,17 +20,17 @@
 
 ### Staging
 
-ruby 2.4.1
-rails 5.0.2
-postgres 9.6.2
-elasticsearch 5.1.2
+* ruby 2.4.1
+* rails 5.0.2
+* postgres 9.6.2
+* elasticsearch 5.1.2
 
 ### Production
 
-ruby 2.4.1
-rails 5.0.2
-postgres 9.6.2
-elasticsearch 5.1.2
+* ruby 2.4.1
+* rails 5.0.2
+* postgres 9.6.2
+* elasticsearch 5.1.2
 
 ## Installation
 
@@ -33,7 +39,7 @@ elasticsearch 5.1.2
 ## Heroku Setup
 
 * Deploys from Github master branch
-* Utilizes CodeShip for CI
+* Utilizes [CodeShip for CI](https://app.codeship.com/projects/213232)
 * `git remote add staging https://git.heroku.com/happenings-server-staging.git`
 * `git remote add production https://git.heroku.com/happenings-server-production.git`
 
