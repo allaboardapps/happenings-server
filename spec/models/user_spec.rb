@@ -113,112 +113,112 @@ describe User, type: :model do
 
     describe "#admin?" do
       it "returns true if user has a role qualified as admin" do
-        user = FactoryGirl.create :user, :admin
+        user = FactoryGirl.create :user, roles: [UserRoles::ADMIN]
         expect(user.admin?).to be_truthy
       end
 
       it "returns false if user has any role other than admin" do
-        user = FactoryGirl.create :user, :customer
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER]
         expect(user.admin?).to be_falsey
       end
     end
 
     describe "#customer?" do
       it "returns true if user has role of customer" do
-        user = FactoryGirl.create :user, :customer
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER]
         expect(user.customer?).to be_truthy
       end
 
       it "returns false if user has any role other than customer" do
-        user = FactoryGirl.create :user, :admin
+        user = FactoryGirl.create :user, roles: [UserRoles::ADMIN]
         expect(user.customer?).to be_falsey
       end
     end
 
     describe "#basic?" do
       it "returns true if user has status of basic" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.basic?).to be_truthy
       end
 
       it "returns true if user has status of premium" do
-        user = FactoryGirl.create :user, :customer, :premium
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::PREMIUM]
         expect(user.basic?).to be_truthy
       end
     end
 
     describe "#role?" do
       it "returns true if user has matching user role" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.role?(UserRoles::CUSTOMER)).to be_truthy
       end
 
       it "returns false if user does not have matching user role" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.role?(UserRoles::ADMIN)).to be_falsey
       end
     end
 
     describe "#status?" do
       it "returns true if user has matching user status" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.status?(UserStatuses::BASIC)).to be_truthy
       end
 
       it "returns false if user does not have matching user status" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.status?(UserStatuses::PRO)).to be_falsey
       end
     end
 
     describe "#pro?" do
       it "returns false if user has status of basic" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.pro?).to be_falsey
       end
 
       it "returns true if user has status of premium" do
-        user = FactoryGirl.create :user, :customer, :premium
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::PREMIUM]
         expect(user.pro?).to be_truthy
       end
 
       it "returns true if user has status of pro" do
-        user = FactoryGirl.create :user, :customer, :pro
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::PRO]
         expect(user.pro?).to be_truthy
       end
     end
 
     describe "#premium?" do
       it "returns false if user has status of basic" do
-        user = FactoryGirl.create :user, :customer, :basic
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::BASIC]
         expect(user.premium?).to be_falsey
       end
 
       it "returns false if user has status of pro" do
-        user = FactoryGirl.create :user, :customer, :pro
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::PRO]
         expect(user.premium?).to be_falsey
       end
 
       it "returns true if user has status of premium" do
-        user = FactoryGirl.create :user, :customer, :premium
+        user = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER], statuses: [UserStatuses::PREMIUM]
         expect(user.premium?).to be_truthy
       end
     end
 
     describe "#active_admin_access?" do
       it "returns true if user has a role qualified for Active Admin access" do
-        user = FactoryGirl.create :user, :admin
+        user = FactoryGirl.create :user, roles: [UserRoles::ADMIN]
         expect(user.active_admin_access?).to be_truthy
       end
 
       it "returns true if user has any role qualified for Active Admin access" do
-        user = FactoryGirl.create :user, :admin
+        user = FactoryGirl.create :user, roles: [UserRoles::ADMIN]
         expect(user.active_admin_access?).to be_truthy
       end
 
       it "returns false if user has no role qualified for Active Admin access" do
-        user_1 = FactoryGirl.create :user, :customer
-        user_2 = FactoryGirl.create :user, :customer
+        user_1 = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER]
+        user_2 = FactoryGirl.create :user, roles: [UserRoles::CUSTOMER]
         expect(user_1.active_admin_access?).to be_falsey
         expect(user_2.active_admin_access?).to be_falsey
       end
