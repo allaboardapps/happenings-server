@@ -10,7 +10,7 @@ ActiveAdmin.register Address do
 
   controller do
     def scoped_collection
-      super.includes(:user)
+      super.includes(:author)
     end
   end
 
@@ -37,9 +37,9 @@ ActiveAdmin.register Address do
   index do
     selectable_column
     column "Short ID" do |address|
-      humanize_uuid(address.id, 8, false)
+      humanize_uuid(uuid: address.id, length: 8, elipsis: false)
     end
-    column "User", sortable: "author.last_name"  do |address|
+    column "Author", sortable: "author.last_name"  do |address|
       link_to address.author.full_name, admin_user_path(address.author)
     end
     column "Address" do |address|
@@ -94,10 +94,10 @@ ActiveAdmin.register Address do
   show do |address|
     attributes_table do
       row "Short ID" do
-        humanize_uuid(address.id, 8, false)
+        humanize_uuid(uuid: address.id, length: 8, elipsis: false)
       end
       row :id
-      row :user, sortable: "author.last_name" do
+      row "Author", sortable: "author.last_name" do
         link_to address.author.full_name, admin_user_path(address.author)
       end
       row :name
@@ -115,7 +115,9 @@ ActiveAdmin.register Address do
       row :longitude
       row :time_zone
       row :phone_number
-      row :website_url
+      row :website_url do
+        link_to address.website_url, address.website_url, target: "_blank"
+      end
       row :admin_notes
       row :archived
       row :test

@@ -16,7 +16,7 @@ class Address < ApplicationRecord
     address_attrs = {
       author: author,
       name: Faker::Company.name,
-      abbreviation: Faker::Lorem.characters.upcase,
+      abbreviation: Faker::Lorem.characters(4).upcase,
       description: Faker::Lorem.sentence(10),
       accessibility_info: Faker::Lorem.sentence(10),
       address_1: Faker::Address.street_name,
