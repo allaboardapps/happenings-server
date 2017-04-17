@@ -5,16 +5,16 @@ class Address < ApplicationRecord
 
   # Creates an address instance for test/dev needs
   #
-  # @param user [Object] a user instance
+  # @param author [Object] a User instance
   # @param dummy [Boolean] default is `true`
   # @return [Object] the newly created address instance with `dummy` set to `true`
   #
   # @example Create a seed instance of an address with dummy trait
   #   Address.seed #=> address
   #   address.dummy #=> true
-  def self.seed(user:, dummy: true)
+  def self.seed(author:, dummy: true)
     address_attrs = {
-      author: user,
+      author: author,
       name: Faker::Company.name,
       abbreviation: Faker::Lorem.characters.upcase,
       description: Faker::Lorem.sentence(10),
