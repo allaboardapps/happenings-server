@@ -4,6 +4,8 @@ require "concerns/activatable_shared"
 describe User, type: :model do
   it_behaves_like "activatable"
 
+  it { is_expected.to have_many :addresses }
+
   describe "validations" do
     it "has a valid factory" do
       expect(FactoryGirl.create(:user)).to be_valid

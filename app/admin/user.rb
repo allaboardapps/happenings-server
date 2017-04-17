@@ -40,7 +40,7 @@ ActiveAdmin.register User do
     column "Roles" do |user|
       user.roles.join(", ")
     end
-    column "Status" do |user|
+    column "Statuses" do |user|
       user.statuses.join(", ")
     end
     column "Updated", sortable: "users.updated_at" do |user|
