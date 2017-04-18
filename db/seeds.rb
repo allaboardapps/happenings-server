@@ -7,7 +7,7 @@ admins = [
 admins.each do |admin|
   User.seed_admin(admin)
 end
-puts "END:   Create admins, Admin Count: #{User.admins.count}"
+puts "END:   Create Admins, Admin Count: #{User.admins.count}"
 
 # CREATE Customers
 if User.dummies.count < 1000
@@ -15,7 +15,7 @@ if User.dummies.count < 1000
   10.times.each do
     User.seed(roles: [UserRoles::CUSTOMER])
   end
-  puts "END:   Create users, Dummy User Count: #{User.dummies.count}"
+  puts "END:   Create Users, Dummy User Count: #{User.dummies.count}"
 end
 
 # CREATE Addresses
@@ -26,5 +26,17 @@ if Address.dummies.count < 1000
       Address.seed(author: user)
     end
   end
-  puts "END:   Create addresses, Dummy User Count: #{Address.dummies.count}"
+  puts "END:   Create Addresses, Dummy User Count: #{Address.dummies.count}"
+end
+
+
+# CREATE Happenings
+if Happening.dummies.count < 1000
+  puts "BEGIN: Create happenings"
+  User.dummies.each do |user|
+    10.times.each do
+      Happening.seed(author: user)
+    end
+  end
+  puts "END:   Create Happenings, Dummy User Count: #{Happening.dummies.count}"
 end
