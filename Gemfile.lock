@@ -134,8 +134,8 @@ GEM
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
-    globalid (0.3.7)
-      activesupport (>= 4.1.0)
+    globalid (0.4.0)
+      activesupport (>= 4.2.0)
     hakiri (0.7.2)
       activesupport
       bundler
@@ -165,7 +165,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.0.4)
+    json (2.1.0)
     jsonapi-renderer (0.1.2)
     kaminari (1.0.1)
       activesupport (>= 4.1.0)
@@ -360,7 +360,7 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
     scout_apm (2.1.23)
-    searchkick (2.2.0)
+    searchkick (2.2.1)
       activemodel (>= 4.1)
       elasticsearch (>= 1)
       hashie
@@ -414,7 +414,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.3)
+    unf_ext (0.0.7.4)
     unicode-display_width (1.1.3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -476,7 +476,7 @@ DEPENDENCIES
   rubocop-rspec (= 1.15.0)
   sass-rails (= 5.0.6)
   scout_apm (= 2.1.23)
-  searchkick (= 2.2.0)
+  searchkick (= 2.2.1)
   selenium-webdriver (= 3.3.0)
   settingslogic (= 2.0.9)
   shoulda-matchers (= 3.1.1)
