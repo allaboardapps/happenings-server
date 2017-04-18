@@ -9,7 +9,7 @@
   "stack": "cedar-14",
   "env": {
     "DB_POOL": {
-      "required": true
+      "value": 5
     },
     "LANG": {
       "required": true
@@ -21,10 +21,10 @@
       "required": true
     },
     "MAX_THREADS": {
-      "required": true
+      "value": 5
     },
     "MIN_THREADS": {
-      "required": true
+      "value": 2
     },
     "RACK_ENV": {
       "required": true
@@ -75,16 +75,6 @@
     },
     "CDN_HOSTNAME": {
       "value": "us-east-1"
-    }
-  },
-  "environments": {
-    "test": {
-      "env": {
-        "SECRET_TOKEN": "test-secret"
-      },
-      "scripts": {
-        "test": "bundle exec rspec && rubocop ."
-      }
     }
   },
   "formation": {
