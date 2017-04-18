@@ -7,6 +7,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :registerable,
          :trackable, :validatable, :confirmable, :lockable, :timeoutable
 
+  has_many :addresses, class_name: "Address", foreign_key: "author_id"
+
   scope :autocomplete, (->(user_query) { active.where("first_name ilike ? or last_name ilike ?", "#{user_query}%", "#{user_query}%").order(last_name: :asc, first_name: :asc) })
   scope :admins, (-> { where("'#{UserRoles::ADMIN}' = ANY (roles)") })
   scope :staffers, (-> { where("'#{UserRoles::STAFF}' = ANY (roles)") })
@@ -249,10 +251,10 @@ class User < ApplicationRecord
   #
   # @param roles [String] default is "customer"
   # @param dummy [Boolean] default is `true`
-  # @return [Object] the newly created user with role of `customer` and dummy set to `true`
+  # @return [Object] the newly created user with role of `customer` and `dummy` attribute set to `true`
   #
   # @example Create a seed instance of a user with dummy trait, roles of customer
-  #   user.seed #=> user
+  #   User.seed #=> user
   #   user.dummy #=> true
   #   user.roles #=> ["customer"]
   def self.seed(roles: UserRoles::CUSTOMER, dummy: true)
