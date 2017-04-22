@@ -29,7 +29,6 @@ if Address.dummies.count < 1000
   puts "END:   Create Addresses, Dummy User Count: #{Address.dummies.count}"
 end
 
-
 # CREATE Happenings
 if Happening.dummies.count < 1000
   puts "BEGIN: Create happenings"
