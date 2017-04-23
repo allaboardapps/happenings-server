@@ -1,7 +1,7 @@
 class AddingHappeningModel < ActiveRecord::Migration[5.0]
   def change
     create_table :happenings, id: :uuid, default: "gen_random_uuid()" do |t|
-      t.string   "type"
+      t.string   "happening_type"
       t.uuid     "author_id"
       t.string   "name"
       t.string   "abbreviation"

@@ -268,7 +268,7 @@ class User < ApplicationRecord
     }
 
     user = new(user_attrs)
-    user.skip_confirmation!
+    user.skip_confirmation_notification!
     user.save!
     user
   end
@@ -284,15 +284,15 @@ class User < ApplicationRecord
   def self.seed_admin(user)
     temp_password = "A1{Faker::Internet.password(10, 120)}"
     admin = find_by(email: user[:email])
-
     return if admin.present?
-    admin = create(
+
+    admin = new(
       email: user[:email], first_name: user[:first_name], last_name: user[:last_name],
       password: temp_password, password_confirmation: temp_password,
       roles: [UserRoles::ADMIN], statuses: [UserStatuses::PREMIUM],
       time_zone: "UTC", zip_code: "60640"
     )
-    admin.skip_confirmation!
+    admin.skip_confirmation_notification!
     admin.save!
     admin
   end

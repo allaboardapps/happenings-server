@@ -31,11 +31,22 @@ end
 
 # CREATE Happenings
 if Happening.dummies.count < 1000
-  puts "BEGIN: Create happenings"
+  puts "BEGIN: Create Happenings"
   User.dummies.each do |user|
     10.times.each do
       Happening.seed(author: user)
     end
   end
   puts "END:   Create Happenings, Dummy User Count: #{Happening.dummies.count}"
+end
+
+# CREATE Occurrences
+if Occurrence.dummies.count < 1000
+  puts "BEGIN: Create Occurrences"
+  Happening.dummies.each do |happening|
+    10.times.each do
+      Occurrence.seed(happening: happening)
+    end
+  end
+  puts "END:   Create Occurrences, Dummy User Count: #{Occurrence.dummies.count}"
 end

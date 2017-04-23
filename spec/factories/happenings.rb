@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :happening do
-    type HappeningTypes::THEATER
+    happening_type HappeningTypes::THEATER
     name Faker::Company.name
     abbreviation Faker::Lorem.characters.upcase
     description Faker::Lorem.sentence(10)

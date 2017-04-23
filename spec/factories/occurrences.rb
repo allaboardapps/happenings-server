@@ -1,8 +1,8 @@
 FactoryGirl.define do
-  fake_starts_at = Time.current
-  fake_ends_at = fake_starts_at + (1..3).hours
+  fake_starts_at = Faker::Time.forward(60)
+  fake_ends_at = fake_starts_at + [2, 3, 4].sample.hours
 
-  factory :occurrences do
+  factory :occurrence do
     starts_at fake_starts_at
     ends_at fake_ends_at
     archived false

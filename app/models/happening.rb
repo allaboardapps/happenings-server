@@ -2,6 +2,7 @@ class Happening < ApplicationRecord
   include Activatable
 
   belongs_to :author, class_name: "User", foreign_key: :author_id
+  has_many :occurrences
 
   # Creates a happening instance for test/dev needs
   #
@@ -14,7 +15,7 @@ class Happening < ApplicationRecord
   #   happening.dummy #=> true
   def self.seed(author:, dummy: true)
     happening_attrs = {
-      type: HappeningTypes::THEATER,
+      happening_type: HappeningTypes::THEATER,
       author: author,
       name: Faker::Company.name,
       abbreviation: Faker::Lorem.characters(4).upcase,

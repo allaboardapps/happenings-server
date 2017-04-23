@@ -1,5 +1,5 @@
 ActiveAdmin.register Address do
-  menu parent: "Users", priority: 2000
+  menu parent: "Inventory", priority: 3000
 
   actions :all, except: [:new, :create, :destroy]
 

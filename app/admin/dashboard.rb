@@ -5,6 +5,13 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
     columns do
       column do
+        panel "Inventory" do
+          ul do
+            li link_to "Happenings", admin_happenings_path
+            li link_to "Occurrences", admin_occurrences_path
+            li link_to "Addresses", admin_addressess_path
+          end
+        end
         panel "System" do
           ul do
             li link_to "Users", admin_users_path
