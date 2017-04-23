@@ -1,5 +1,5 @@
-ActiveAdmin.register Address do
-  menu parent: "Inventory", priority: 3000
+ActiveAdmin.register Happening do
+  menu parent: "Inventory", priority: 1000
 
   actions :all, except: [:new, :create, :destroy]
 

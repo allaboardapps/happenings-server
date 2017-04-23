@@ -35,7 +35,7 @@ gem "uglifier", "3.2.0"
 gem "jquery-rails"
 
 group :production do
-  gem "scout_apm", "2.1.23"
+  gem "scout_apm", "2.1.24"
 end
 
 group :development, :test do
@@ -71,7 +71,7 @@ group :test do
   gem "rspec-sidekiq", "3.0.1"
   gem "rspec_junit_formatter", "0.2.3"
   gem "rubocop-rspec", "1.15.0"
-  gem "selenium-webdriver", "3.3.0"
+  gem "selenium-webdriver", "3.4.0"
   gem "shoulda-matchers", "3.1.1"
   gem "timecop", "0.8.1"
 end
