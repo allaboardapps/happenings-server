@@ -8,12 +8,11 @@ gem "rails", "~> 5.0.2"
 # gem install foreman
 
 gem "active_model_serializers", "0.10.5"
-gem "activeadmin", "1.0.0.pre5"
+gem "activeadmin", "1.0.0"
 gem "devise", "4.2.1"
 gem "faker", "1.7.3"
 gem "figaro", "1.1.1"
 gem "hirefire-resource", "0.4.0"
-gem "inherited_resources", "1.7.1"
 gem "kaminari", "1.0.1"
 gem "money-rails", "1.8.0"
 gem "pg", "0.20.0"
@@ -24,8 +23,7 @@ gem "rollbar", "2.14.1"
 gem "sass-rails", "5.0.6"
 gem "searchkick", "2.2.1"
 gem "settingslogic", "2.0.9"
-gem "sidekiq", "4.2.10"
-gem "sidekiq-failures", "0.4.5"
+gem "sidekiq", "5.0.0"
 gem "snitcher", "0.4.0"
 gem "state_machines", "0.4.0"
 gem "state_machines-activerecord", "0.4.0"
@@ -56,7 +54,7 @@ group :development do
   gem "letter_opener_web", "1.3.1"
   gem "listen", "3.1.5"
   gem "web-console", "3.5.0"
-  gem "yard", "0.9.8"
+  gem "yard", "0.9.9"
 end
 
 group :test do
